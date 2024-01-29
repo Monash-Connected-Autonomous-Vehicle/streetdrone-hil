@@ -1,0 +1,9 @@
+repositories:
+  SD-VehicleInterface:
+    type: git
+    url: https://github.com/Monash-Connected-Autonomous-Vehicle/SD-VehicleInterface.git
+    version: main
+  carla-ros-bridge:
+    type: git
+    url: https://github.com/carla-simulator/ros-bridge
+    version: master
