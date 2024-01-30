@@ -1,6 +1,5 @@
 dictor
 requests
-opencv-python==4.2.0.32
 pygame
 tabulate
 rospkg
@@ -12,7 +11,6 @@ psutil
 xmlschema==1.0.18
 ephem
 tabulate
-opencv-python==4.2.0.32
 numpy
 matplotlib
 six
