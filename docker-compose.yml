@@ -30,5 +30,5 @@ services:
   carla-ros-bridge:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.foxy
     

@@ -1,4 +1,4 @@
-FROM ros:humble
+FROM ros:foxy
 
 ARG USERNAME=mcav
 ARG USER_UID=1000
@@ -10,17 +10,11 @@ RUN apt-get update && apt-get install -y \
 	software-properties-common \
   vim \
   tmux \
-	&& rm -rf /var/lib/apt/lists/* \
-	&& add-apt-repository ppa:deadsnakes/ppa \
-	&& apt-get install -y \
 	wget \
-	python3.8 \
-	python3.8-distutils \
-	python3.8-virtualenv \
 	&& wget https://bootstrap.pypa.io/get-pip.py \
-	&& python3.8 get-pip.py \
+	&& python3 get-pip.py \
 	&& rm get-pip.py \
-  && rm -rf /var/lib/apt/lists/* \
+	&& rm -rf /var/lib/apt/lists/* \
   && apt-get clean
 
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -36,21 +30,19 @@ WORKDIR ${SRC_DIR}
 COPY streetdrone-hil.repos .
 RUN mkdir external/ && vcs import external/ < streetdrone-hil.repos --recursive
 
-# Project-specific depenedency installs
 WORKDIR ${WS_DIR}
-RUN apt-get update && rosdep update && DEBIAN_FRONTEND=noninteractive rosdep install --from-paths src --ignore-src -r --default-yes \
+RUN apt-get update && rosdep update && DEBIAN_FRONTEND=noninteractive rosdep install --include-eol-distros --from-paths src --ignore-src -r --default-yes \
 	&& apt-get install -y \
 	ros-${ROS_DISTRO}-can-msgs \
 	&& rm -rf /var/lib/apt/lists/* \
-	#&& python3.8 -m pip install carla \
+	&& python3 -m pip install carla==0.9.13 \
 	&& apt-get clean
 
-#RUN python3.8 -m venv ${WS_DIR}/venv
-RUN virtualenv --python=python3.8 ${WS_DIR}/venv
-ENV PATH="${WS_DIR}/venv/bin:$PATH"
-
-#COPY ./requirements.txt requirements.txt
-RUN python3.8 -m pip install -Ur requirements.txt
+# Project-specific depenedency installs
+WORKDIR ${SRC_DIR}/external/carla-ros-bridge
+ENV ROS_PYTHON_VERSION="3"
+ENV ROS_VERSION="2"
+RUN ./install_dependencies.sh
 
 # Build project
 COPY . ${SRC_DIR}
