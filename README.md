@@ -45,11 +45,12 @@ Terminal # (What are we doing):
 
 ### CARLA example 
 Terminal 1 (Launch CARLA server):
-- `/opt/carla-simulator/CarlaUE4.sh`
+- docker compose --profile carla up
 
 Terminal 2 (Launch ...):
-- `cd ~/mcav_ws && source install/setup.bash`
-- `ros2 launch ...`
+- docker compose --profile carla-ros-bridge up
+- docker exec -it streetdrone-hil-carla-ros-bridge /bin/bash
+- ros2 launch carla_ros_bridge carla_ros_bridge.launch.py timeout:=5 <!-- Timeout of 5s is important. Default of 2s will always timeout --!>
 
 Terminal 3 (Launch ....):
 - `cd ~/mcav_ws && source install/setup.bash`

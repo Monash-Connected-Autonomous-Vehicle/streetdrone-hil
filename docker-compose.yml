@@ -2,13 +2,16 @@ version: '3.8'
 
 services:
   carla:
-    image: carlasim/carla:latest
+    image: carlasim/carla:0.9.13
+    profiles: [carla]
     command: ["bash", "./CarlaUE4.sh", "-vulkan"]
     runtime: nvidia
-    # ports:
+    #networks:
+    #  - bridge_network
+    #ports:
     #  - "2000-2002:2000-2002"
     environment:
-      - DISPLAY=${DISPLAY}
+      - DISPLAY=${DISPLAY} 
       - NVIDIA_VISIBLE_DEVICES=all
       - NVIDIA_DRIVER_CAPABILITIES=all
       - QT_X11_NO_MITSHM=1 # Fix a bug with QT
@@ -28,7 +31,19 @@ services:
     stdin_open: true
     tty: true
   carla-ros-bridge:
+    profiles: [carla-ros-bridge]
     build:
       context: .
-      dockerfile: Dockerfile.foxy
-    
+      dockerfile: Dockerfile
+    #networks:
+    #  - bridge_network
+    command: ["bash"]
+    #ports:
+    #  - "2000-2002:2000-2002"
+    network_mode: "host"
+    stdin_open: true
+    tty: true
+
+networks:
+  bridge_network:
+    driver: bridge
