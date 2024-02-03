@@ -6,10 +6,6 @@ services:
     profiles: [carla]
     command: ["bash", "./CarlaUE4.sh", "-vulkan"]
     runtime: nvidia
-    #networks:
-    #  - bridge_network
-    #ports:
-    #  - "2000-2002:2000-2002"
     environment:
       - DISPLAY=${DISPLAY} 
       - NVIDIA_VISIBLE_DEVICES=all
@@ -33,17 +29,16 @@ services:
   carla-ros-bridge:
     profiles: [carla-ros-bridge]
     build:
-      context: .
-      dockerfile: Dockerfile
-    #networks:
-    #  - bridge_network
+      context: ./
+      dockerfile: ./Dockerfile
     command: ["bash"]
-    #ports:
-    #  - "2000-2002:2000-2002"
     network_mode: "host"
     stdin_open: true
     tty: true
-
-networks:
-  bridge_network:
-    driver: bridge
+    volumes:
+      - ${PWD}:/home/mcav/ros2_ws/src/civ4100:rw
+      - /home/mcav/.vimrc:/home/mcav/.vimrc:rw
+      - /dev/shm:/dev/shm #https://answers.ros.org/question/370595/ros2-foxy-nodes-cant-communicate-through-docker-container-border/
+    environment:
+      - HOST_HOME=${HOST_HOME}
+      - HOST_USER=${HOST_USER}

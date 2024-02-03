@@ -4,7 +4,7 @@ ARG USERNAME=mcav
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG WS_DIR=/home/${USERNAME}/ros2_ws
-ARG SRC_DIR=${WS_DIR}/src
+ENV SRC_DIR=${WS_DIR}/src
 
 RUN apt-get update && apt-get install -y \
 	software-properties-common \
@@ -29,6 +29,7 @@ RUN mkdir -p ${SRC_DIR}
 WORKDIR ${SRC_DIR}
 COPY streetdrone-hil.repos .
 RUN mkdir external/ && vcs import external/ < streetdrone-hil.repos --recursive
+RUN rm streetdrone-hil.repos
 
 WORKDIR ${WS_DIR}
 RUN apt-get update && rosdep update && DEBIAN_FRONTEND=noninteractive rosdep install --include-eol-distros --from-paths src --ignore-src -r --default-yes \
@@ -45,7 +46,6 @@ ENV ROS_VERSION="2"
 RUN ./install_dependencies.sh
 
 # Build project
-COPY . ${SRC_DIR}
 RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd ${WS_DIR}; colcon build --symlink-install --packages-up-to carla_ros_bridge sd_msgs sd_vehicle_interface'
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /home/${USERNAME}/.bashrc
