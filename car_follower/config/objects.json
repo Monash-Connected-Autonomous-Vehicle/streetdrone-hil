@@ -1,0 +1,13 @@
+{   
+    "objects": 
+    [
+        {
+            "type": "vehicle.tesla.model3",
+            "id": "ego_vehicle"
+				},
+        {
+            "type": "vehicle.tesla.cybertruck",
+            "id": "lead_vehicle"
+				}
+		]
+}
