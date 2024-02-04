@@ -2,12 +2,12 @@
 - Ubuntu 22.04 (amd64)
 - ROS Humble
 - Python 3.10
-### Setting up Carla X Autoware
-- Note: if you encounter any strange errors, consult *Common Bugs* listed at the end of this directory. Alternatively, check out [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27)or create a new issue for this repo
+## Setting up Carla X Autoware
+- Note: if you encounter any strange errors, consult *Common Bugs* listed at the end of this README. Alternatively, check out [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27) or create a new issue for this repo
 - If you have issues with Autoware, ensure you can at least install & build the latest Autoware repo without any issues 
 - This is already set up in *the beast* under `~/dbat` directory
 
-#### Set up Autoware
+### Set up Autoware
 1. Create directory called `carlaxautoware` in Home directory:
 ```bash
 mkdir ~/carlaxautoware
@@ -64,7 +64,7 @@ cd ~/carlaxautoware/autoware
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
 
-#### Set up Carla + additional directories
+### Set up Carla + additional directories
 1. Create sub directory for Carla-related files
 ```sh
 mkdir ~/carlaxautoware/carla-0.9.15
@@ -104,7 +104,7 @@ wget https://bitbucket.org/carla-simulator/autoware-contents/src/master/maps/poi
 mv Town01.pcd pointcloud_map.pcd
 ```
 
-#### Running Carla X Autoware
+## Running Carla X Autoware
 First Terminal:
 ```sh
 cd ~/carlaxautoware/carla-0.9.15
@@ -133,7 +133,7 @@ cd ~/carlaxautoware/carla-0.9.15/streetdrone-hil/op_scripts
 ./run_exploration_mode_ros2.sh
 ```
 
-##### Broadcasting ROS publishes to LAN (Optional)
+### Broadcasting ROS publishes to LAN (Optional)
 Do this before running `/run_exploration_mode_ros2.sh`:
 
 ```sh
@@ -141,7 +141,7 @@ export ROS_LOCALHOST_ONLY=2
 export ROS_DOMAIN_ID=2
 ```
 
-#### Common Bugs
+### Common Bugs
 *ImportError: cannot import name '...' from 'collections' using Python 3.10*
 - Refer to [this stackoverflow answer](https://stackoverflow.com/questions/69381312/importerror-cannot-import-name-from-collections-using-python-3-10)
 
