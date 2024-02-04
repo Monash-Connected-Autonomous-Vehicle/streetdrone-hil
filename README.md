@@ -3,7 +3,10 @@
 - ROS Humble
 - Python 3.10
 ### Setting up Carla X Autoware
-- Note: if you encounter any strange errors, consult [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27)
+- Note: if you encounter any strange errors, consult *Common Bugs* listed at the end of this directory. Alternatively, check out [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27)or create a new issue for this repo
+- If you have issues with Autoware, ensure you can at least install & build the latest Autoware repo without any issues 
+- This is already set up in *the beast* under `~/dbat` directory
+
 #### Set up Autoware
 1. Create directory called `carlaxautoware` in Home directory:
 ```bash
@@ -23,14 +26,14 @@ git checkout release/2023.10
 ./setup-dev-env.sh
 ```
 
-3. Clone autoware.repos:
+3. Clone `autoware.repos`:
 ```sh
-cd autoware 
+# In ~/carlaxautoware/autoware
 mkdir src 
 vcs import src < autoware.repos
 ```
 
-4. Install dependent ROS packages
+4. Install dependent ROS packages 
 ```sh
 source /opt/ros/humble/setup.bash rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 ```
@@ -51,9 +54,8 @@ git clone https://github.com/autowarefoundation/awf_velodyne
 cd ~/carlaxautoware/autoware/src/param/autoware_individual_params/individual_params/config/default/
 mkdir carla_sensor_kit
 cd carla_sensor_kit
-wget https://github.com/ZATiTech/open_planner/blob/humble/op_carla_bridge/carla_sensor_kit_launch/carla_sensor_kit_description/config/sensor_kit_calibration.yaml
-wget https://github.com/ZATiTech/open_planner/blob/humble/op_carla_bridge/carla_sensor_kit_launch/carla_sensor_kit_description/config/sensors_calibration.yaml
-
+wget https://raw.githubusercontent.com/ZATiTech/open_planner/humble/op_carla_bridge/carla_sensor_kit_launch/carla_sensor_kit_description/config/sensor_kit_calibration.yaml
+wget https://raw.githubusercontent.com/ZATiTech/open_planner/humble/op_carla_bridge/carla_sensor_kit_launch/carla_sensor_kit_description/config/sensors_calibration.yaml
 ```
 
 7. Build Autoware
@@ -61,13 +63,12 @@ wget https://github.com/ZATiTech/open_planner/blob/humble/op_carla_bridge/carla_
 cd ~/carlaxautoware/autoware
 colcon build --symlink-install --cmake-args -DCMAKE_BUILD_TYPE=Release
 ```
-- You may need to `colcon build` a few times until there are no more `stderr`s
 
 #### Set up Carla + additional directories
 1. Create sub directory for Carla-related files
 ```sh
-mkdir ~/carlaxautoware/autoware/carla-0.9.15
-cd ~/carlaxautoware/autoware/carla-0.9.15
+mkdir ~/carlaxautoware/carla-0.9.15
+cd ~/carlaxautoware/carla-0.9.15
 ```
 
 2. Download [Carla 0.9.15](https://github.com/carla-simulator/carla/releases) and extract the contents into the directory above
@@ -84,20 +85,16 @@ git clone https://github.com/hatem-darweesh/scenario_runner.git
 
 - This repo (which is a modified version of `op_bridge`) fork and install its python dependencies
 ```sh
-git clone https://github.com/Monash-Connected-Autonomous-Vehicle/streetdrone-hil.git
+git clone https://github.com/Monash-Connected-Autonomous-Vehicle/streetdrone-hil.git -b carla_autoware
 cd streetdrone-hil
 pip install -r requirements.txt
 ```
 - **Note**: if you encounter errors when install from `requirements.txt`, you'll need to install each python library manually
 
-
-> [!NOTE] Up to here
-> Extract Carla
-
 4. Download relevant Carla`.egg` file
 ```sh
 cd ~/carlaxautoware/carla-0.9.15/PythonAPI/carla/dist
-wget https://github.com/dtonda8/streetdrone-hil/blob/ros2-humble/carla-0.9.15-py3.10-linux-x86_64.egg
+wget https://github.com/Monash-Connected-Autonomous-Vehicle/streetdrone-hil/blob/carla_autoware/carla-0.9.15-py3.10-linux-x86_64.egg
 ```
 
 5. Download `pcd` map
@@ -143,3 +140,34 @@ Do this before running `/run_exploration_mode_ros2.sh`:
 export ROS_LOCALHOST_ONLY=2
 export ROS_DOMAIN_ID=2
 ```
+
+#### Common Bugs
+*ImportError: cannot import name '...' from 'collections' using Python 3.10*
+- Refer to [this stackoverflow answer](https://stackoverflow.com/questions/69381312/importerror-cannot-import-name-from-collections-using-python-3-10)
+
+*'carla' has not attribute 'Client'*
+```
+pip3 install -Iv setuptools==47.3.1
+pip install carla
+```
+
+*Unable to create glx context*   
+```
+sudo apt-get remove --purge xserver-xorg
+sudo apt-get install xserver-xorg
+sudo dpkg-reconfigure xserver-xorg
+sudo reboot
+```
+
+*Captured stderr output: error: No such key: 'base_link'* 
+```sh
+[ERROR] [launch]: Caught exception in launch (see debug for traceback): executed command failed. Command: xacro /home/mcav/temp/autoware/install/tier4_vehicle_launch/share/tier4_vehicle_launch/urdf/vehicle.xacro vehicle_model:=sample_vehicle sensor_model:=carla_sensor_kit config_dir:=/home/mcav/temp/autoware/install/individual_params/share/individual_params/config/default/carla_sensor_kit  Captured stderr output: error: No such key: 'base_link'  when evaluating expression 'calibration['base_link']['sensor_kit_base_link']['x']'  when instantiating macro: sensor_kit_macro (/home/mcav/temp/autoware/install/carla_sensor_kit_description/share/carla_sensor_kit_description/urdf/sensor_kit.xacro)  in file: /home/mcav/temp/autoware/install/carla_sensor_kit_description/share/carla_sensor_kit_description/urdf/sensors.xacro included from: /home/mcav/temp/autoware/install/tier4_vehicle_launch/share/tier4_vehicle_launch/urdf/vehicle.xacro    
+```
+
+*ERROR:colcon.colcon_core.extension_point:Exception loading extension 'colcon_core.verb.version-check': The 'typing>=3.7.4' distribution was not found and is required by typing-extensions*
+```
+pip install typing
+```
+
+*ModuleNotFoundError: No module named 'distutils.command.bdist_wininst'*
+`pip install --upgrade setuptools`
