@@ -145,11 +145,13 @@ export ROS_DOMAIN_ID=2
 *ImportError: cannot import name '...' from 'collections' using Python 3.10*
 - Refer to [this stackoverflow answer](https://stackoverflow.com/questions/69381312/importerror-cannot-import-name-from-collections-using-python-3-10)
 
+
 *'carla' has not attribute 'Client'*
 ```
 pip3 install -Iv setuptools==47.3.1
 pip install carla
 ```
+
 
 *Unable to create glx context*   
 ```
@@ -159,15 +161,14 @@ sudo dpkg-reconfigure xserver-xorg
 sudo reboot
 ```
 
-*Captured stderr output: error: No such key: 'base_link'* 
-```sh
-[ERROR] [launch]: Caught exception in launch (see debug for traceback): executed command failed. Command: xacro /home/mcav/temp/autoware/install/tier4_vehicle_launch/share/tier4_vehicle_launch/urdf/vehicle.xacro vehicle_model:=sample_vehicle sensor_model:=carla_sensor_kit config_dir:=/home/mcav/temp/autoware/install/individual_params/share/individual_params/config/default/carla_sensor_kit  Captured stderr output: error: No such key: 'base_link'  when evaluating expression 'calibration['base_link']['sensor_kit_base_link']['x']'  when instantiating macro: sensor_kit_macro (/home/mcav/temp/autoware/install/carla_sensor_kit_description/share/carla_sensor_kit_description/urdf/sensor_kit.xacro)  in file: /home/mcav/temp/autoware/install/carla_sensor_kit_description/share/carla_sensor_kit_description/urdf/sensors.xacro included from: /home/mcav/temp/autoware/install/tier4_vehicle_launch/share/tier4_vehicle_launch/urdf/vehicle.xacro    
-```
 
 *ERROR:colcon.colcon_core.extension_point:Exception loading extension 'colcon_core.verb.version-check': The 'typing>=3.7.4' distribution was not found and is required by typing-extensions*
 ```
 pip install typing
 ```
 
+
 *ModuleNotFoundError: No module named 'distutils.command.bdist_wininst'*
+```
 `pip install --upgrade setuptools`
+```
