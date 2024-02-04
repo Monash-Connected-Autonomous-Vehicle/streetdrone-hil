@@ -1,11 +1,13 @@
-#### Prerequisites
+### Prerequisites
 - Ubuntu 22.04 (amd64)
 - ROS Humble
 - Python 3.10
+
 ## Setting up Carla X Autoware
 - Note: if you encounter any strange errors, consult *Common Bugs* listed at the end of this README. Alternatively, check out [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27) or create a new issue for this repo
 - If you have issues with Autoware, ensure you can at least install & build the latest Autoware repo without any issues 
-- This is already set up in *the beast* under `~/dbat` directory
+- This is already set up in *the beast* (28 fps on rviz) under `~/dbat` directory and *hive-3* (20 fps) under `~/carlaxautoware` directory 
+- Also installed in SD Laptop but barely runs at (2 fps)
 
 ### Set up Autoware
 1. Create directory called `carlaxautoware` in Home directory:
