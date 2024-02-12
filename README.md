@@ -6,8 +6,7 @@
 ## Setting up Carla X Autoware
 - Note: if you encounter any strange errors, consult *Common Bugs* listed at the end of this README. Alternatively, check out [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27) or create a new issue for this repo
 - If you have issues with Autoware, ensure you can at least install & build the latest Autoware repo without any issues 
-- This is already set up in *the beast* (28 fps on rviz) under `~/dbat` directory and *hive-3* (20 fps) under `~/carlaxautoware` directory 
-- Also installed in SD Laptop but barely runs at (2 fps)
+- This is currently set up in *the beast* (28 fps on rviz) under `~/dbat` directory, *hive-3* (20 fps) and SD Alienware Laptop (8 fps) under `~/carlaxautoware` 
 
 ### Set up Autoware
 1. Create directory called `carlaxautoware` in Home directory:
@@ -99,11 +98,12 @@ cd ~/carlaxautoware/carla-0.9.15/PythonAPI/carla/dist
 wget https://github.com/Monash-Connected-Autonomous-Vehicle/streetdrone-hil/blob/carla_autoware/carla-0.9.15-py3.10-linux-x86_64.egg
 ```
 
-5. Download `pcd` map
+5. Download `pcd` map from this [website](https://bitbucket.org/carla-simulator/autoware-contents/src/master/maps/point_cloud_maps/Town01.pcd) into the Downloads folder.
+
+6. Then move it to correct location and rename it
 ```sh
 cd ~/carlaxautoware/carla-0.9.15/op_agent/autoware-contents/maps/Town01/
-wget https://bitbucket.org/carla-simulator/autoware-contents/src/master/maps/point_cloud_maps/Town01.pcd
-mv Town01.pcd pointcloud_map.pcd
+mv ~/Downloads/Town01.pcd pointcloud_map.pcd
 ```
 
 ## Running Carla X Autoware
@@ -174,3 +174,6 @@ pip install typing
 ```
 `pip install --upgrade setuptools`
 ```
+
+*ImportError: cannot import name 'gcd' from 'fractions' (/usr/lib/python3.10/fractions.py)*
+- Refer to [this stackoverflow answer](https://stackoverflow.com/questions/66174862/import-error-cant-import-name-gcd-from-fractions)
