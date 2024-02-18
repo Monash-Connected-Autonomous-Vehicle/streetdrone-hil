@@ -6,7 +6,8 @@
 ## Setting up Carla X Autoware
 - Note: if you encounter any strange errors, consult *Common Bugs* listed at the end of this README. Alternatively, check out [this resolved issue](https://github.com/hatem-darweesh/op_bridge/issues/27) or create a new issue for this repo
 - If you have issues with Autoware, ensure you can at least install & build the latest Autoware repo without any issues 
-- This is currently set up in *the beast* (28 fps on rviz) under `~/dbat` directory, *hive-3* (20 fps) and SD Alienware Laptop (8 fps) under `~/carlaxautoware` 
+- This is currently set up on the *hive-3* (20 fps) and SD Alienware Laptop (8 fps) under `~/carlaxautoware` 
+- Setup time is approximately 1-2 hours
 
 ### Set up Autoware
 1. Create directory called `carlaxautoware` in Home directory:
@@ -98,7 +99,7 @@ cd ~/carlaxautoware/carla-0.9.15/PythonAPI/carla/dist
 wget https://github.com/Monash-Connected-Autonomous-Vehicle/streetdrone-hil/blob/carla_autoware/carla-0.9.15-py3.10-linux-x86_64.egg
 ```
 
-5. Download `pcd` map from this [website](https://bitbucket.org/carla-simulator/autoware-contents/src/master/maps/point_cloud_maps/Town01.pcd) into the Downloads folder.
+5. Download `pcd` map from this [website](https://bitbucket.org/carla-simulator/autoware-contents/src/master/maps/point_cloud_maps/Town01.pcd) into the `~/Downloads` folder.
 
 6. Then move it to correct location and rename it
 ```sh
@@ -115,7 +116,6 @@ cd ~/carlaxautoware/carla-0.9.15
 
 Second Terminal:
 ```sh
-export OP_BRIDGE_ROOT=~/carlaxautoware/carla-0.9.15/streetdrone-hil
 export OP_AGENT_ROOT=~/carlaxautoware/carla-0.9.15/op_agent
 export OP_BRIDGE_ROOT=~/carlaxautoware/carla-0.9.15/streetdrone-hil
 export AUTOWARE_ROOT=~/carlaxautoware/autoware
