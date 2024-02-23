@@ -7,3 +7,7 @@ repositories:
     type: git
     url: https://github.com/carla-simulator/ros-bridge
     version: master
+  hardware-in-loop:
+    type: git
+    url: https://github.com/Monash-Connected-Autonomous-Vehicle/hardware_in_loop
+    version: master
