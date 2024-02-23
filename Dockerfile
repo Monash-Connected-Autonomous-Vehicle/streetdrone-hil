@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
   vim \
   tmux \
 	wget \
+	kmod \
+  iproute 2 \
 	&& wget https://bootstrap.pypa.io/get-pip.py \
 	&& python3 get-pip.py \
 	&& rm get-pip.py \
@@ -46,7 +48,7 @@ ENV ROS_VERSION="2"
 RUN ./install_dependencies.sh
 
 # Build project
-RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd ${WS_DIR}; colcon build --symlink-install --packages-up-to carla_ros_bridge sd_msgs sd_vehicle_interface'
+RUN /bin/bash -c '. /opt/ros/$ROS_DISTRO/setup.bash; cd ${WS_DIR}; colcon build --symlink-install --packages-up-to carla_ros_bridge sd_msgs sd_vehicle_interface hardware_in_loop'
 
 RUN echo "source /opt/ros/$ROS_DISTRO/setup.bash" >> /home/${USERNAME}/.bashrc
 RUN echo "source ${WS_DIR}/install/setup.bash" >> /home/${USERNAME}/.bashrc

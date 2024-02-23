@@ -28,6 +28,8 @@ services:
     tty: true
   carla-ros-bridge:
     profiles: [carla-ros-bridge]
+    cap_add:
+      - NET_ADMIN
     build:
       context: ./
       dockerfile: ./Dockerfile
@@ -39,6 +41,7 @@ services:
       - ${PWD}:/home/mcav/ros2_ws/src/civ4100:rw
       - /home/mcav/.vimrc:/home/mcav/.vimrc:rw
       - /dev/shm:/dev/shm #https://answers.ros.org/question/370595/ros2-foxy-nodes-cant-communicate-through-docker-container-border/
+      - /lib/modules:/lib/modules
     environment:
       - HOST_HOME=${HOST_HOME}
       - HOST_USER=${HOST_USER}
