@@ -93,7 +93,7 @@ def generate_launch_description():
                 'role_name': launch.substitutions.LaunchConfiguration('role_name'),
                 'control_id': launch.substitutions.LaunchConfiguration('control_id')
             }.items()
-        )
+        ),
     ])
     return ld
 
