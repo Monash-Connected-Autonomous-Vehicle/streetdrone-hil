@@ -78,18 +78,19 @@ def main(args):
     try:
         client = carla.Client('localhost', 2000)  # create client to connect to simulator
         client.set_timeout(10.0)
-        world = client.load_world('Town01')
+        #world = client.load_world('Town01')
+        world = client.get_world()
 
         print('Sucessfully connected and retrieved carla world.')
 
         # set spectator camera to a birds view of testing area
         # get the spectator actor which is a spectator that controls camera view
         # in simulation window (window that appears when you start carla)
-        spectator = world.get_spectator()
-        spectator.set_transform(carla.Transform(carla.Location(SPEC_CAM_X, SPEC_CAM_Y, SPEC_CAM_Z),
-                                                carla.Rotation(SPEC_CAM_PITCH, SPEC_CAM_YAW, SPEC_CAM_ROLL)))
+        #spectator = world.get_spectator()
+        #spectator.set_transform(carla.Transform(carla.Location(SPEC_CAM_X, SPEC_CAM_Y, SPEC_CAM_Z),
+                                                #carla.Rotation(SPEC_CAM_PITCH, SPEC_CAM_YAW, SPEC_CAM_ROLL)))
 
-        world.set_weather(carla.WeatherParameters())  # set default weather
+        #world.set_weather(carla.WeatherParameters())  # set default weather
 
         # get blueprint library which is used for creating actors
         blueprint_library = world.get_blueprint_library()
@@ -101,21 +102,19 @@ def main(args):
         # it's easily distinguishable in debugging
         lead_vehicle_bp.set_attribute('role_name', LEAD_VEHICLE_NAME)
 
-        spawn_loc = carla.Location(X, Y, Z)
+        spawn_loc = carla.Location(50, 0, 2)
         rotation = carla.Rotation(PITCH, YAW, ROLL)
         transform = carla.Transform(spawn_loc, rotation)
 
 
         # spawn the vehicle
         lead_vehicle = world.spawn_actor(lead_vehicle_bp, transform)
-
-
-
         # turn all vehicle lights on so its more visible in nighttime tests
         lead_vehicle.set_light_state(carla.VehicleLightState.All)
 
         # wait for ego vehicle to spawn
 
+        
         while (find_actor_by_rolename(world, EGO_VEHICLE_NAME) == None):
             try:
                 print("Waiting for ego vehicle to spawn....", end="\r")
@@ -140,10 +139,15 @@ def main(args):
         time.sleep(50)
         lead_vehicle.set_target_velocity(
             carla.Vector3D(0, 0, 0))  # set target velocity for lead vehicle
+
+        #Publish to /carla/ego_vehicle/control/vehicle_control_cmd
+
+
         time.sleep(5)
          # set target velocity for lead vehicle
         lead_vehicle.destroy()
         ego_vehicle.destroy()
+        
 
     finally:
 
