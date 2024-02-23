@@ -15,53 +15,44 @@ A demo with basic car following functionality prepared in CARLA for the [CIV4100
 - [docker-compose](https://docs.docker.com/compose/install/linux/#install-using-the-repository)
 - [CARLA Requirements](https://carla.readthedocs.io/en/latest/start_quickstart/#before-you-begin)
 
-## Installation
-- Go to the `src` directory: `cd ~/colcon_ws/src`
-- Clone the source code: `git clone `
-- Go to the root of the workspace: `cd ~/colcon_ws`
-- Install ROS dependencies: `rosdep install --from-paths src --ignore-src -r -y`
-- Build: `colcon build --symlink-install`
-
-<!-- Directory structure gives a brief on what folders contain what. -->
 This should result in a directory structure similar to the following:
 ```
-ws/                                                     
+ros2_ws/                                                     
 ├── build                                                                                                               
+├── install 
+├── log
 └── src
-    └── mcav_autonomy
-        ├── folder                  # what's in there
-        ├── folder                  # what's in there
-        └── folder                  # what's in there
+    └── civ4100
+        ├── demo # demo package
+    └── external #all external repos
+        ├── SD-VehicleInterface #sd_vehicle_interface ros2 package
+        ├── carla-ros-bridge 
+        └── hardware_in_loop # carla_odom_to_twist ros2 package
+
 ```
 
 ## Usage
-<!-- 
- Usage instructions must be concise. Any export statements must be added to .bashrc (add steps in either requirements of installation).
-
-It should follow the structure mentioned below:
-Terminal # (What are we doing):
-- `shell code`
--->
 
 ### CARLA example 
-Terminal 1 (Launch CARLA server):
-- docker compose --profile carla up
+Launch CARLA server:
+- `docker compose --profile carla up`
 
-Terminal 2 (Launch ...):
-- docker compose --profile carla-ros-bridge up
-- docker exec -it streetdrone-hil-carla-ros-bridge /bin/bash
-- ros2 launch carla_ros_bridge carla_ros_bridge.launch.py timeout:=5 <!-- Timeout of 5s is important. Default of 2s will always timeout --!>
+Launch Docker container with carla-ros-bridge dependencies
+- `docker compose --profile carla-ros-bridge up`
 
-Terminal 3 (Launch ....):
-- `cd ~/mcav_ws && source install/setup.bash`
-- `ros2 launch ...`
+Attach to this container 
+By default, `<container-name>` is `streetdrone-hil-carla-ros-bridge`. If it doesn't work, see the actual container name using `docker container ls`.
+- `docker exec -it <container-name> /bin/bash`
 
-### StreetDrone example
-...
+Run custom scripts
+- `ros2 launch demo demo.launch.py` - this runs carla-ros-bridge and spawns all relevant objects.
+- `ros2 run demo ego_vehicle_control` - this is the script that contains the lead/ego vehicle car logic.
 
-## Tests
+Convert CARLA ego_vehicle odometry to Twist messages (so that sd_vehicle_interface can understand)
+- `ros2 run hardware_in_loop carla_odom_to_twist`
 
-Located under `tests`. Enter `pytest` in the terminal to run all tests.
+Run sd_vehicle_interface
+- `cd ~/ros2_ws/src/external/SD-VehicleInterface` `./can_setup.sh`
+- `ros2 launch sd_vehicle_interface sd_vehicle_interface.launch.xml`
 
-## ROS Parameters and Topics
-Please see the [`ROSINFO.md`](https://github.com/Monash-Connected-Autonomous-Vehicle/mcav-GitHub-documentation-standard/blob/main/ROSINFO.md) file for more info.
+Put the Streetdrone into autonomous mode and you should be good to go.
