@@ -37,7 +37,8 @@ vcs import src < autoware.repos
 
 4. Install dependent ROS packages 
 ```sh
-source /opt/ros/humble/setup.bash rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
+source /opt/ros/humble/setup.bash
+rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 ```
 
 5. Clone OpenPlanner and LIDAR driver in the *universe* folder (/src/universe/external)
