@@ -75,7 +75,7 @@ cd ~/carlaxautoware/carla-0.9.15
 ```
 
 2. Download [Carla 0.9.15](https://github.com/carla-simulator/carla/releases) and extract the contents into the directory above
-3. Clone these additional repos in `~/carlaxautoware/autoware/carla-0.9.15`:
+3. Clone these additional repos in `~/carlaxautoware/carla-0.9.15`:
 - `op_agent`
 ```sh
 git clone https://github.com/hatem-darweesh/op_agent.git -b ros2-humble
