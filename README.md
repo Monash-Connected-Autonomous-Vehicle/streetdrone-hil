@@ -131,17 +131,17 @@ export PYTHONPATH=$PYTHONPATH:${CARLA_ROOT}/PythonAPI/carla/agents
 export PYTHONPATH=$PYTHONPATH:${CARLA_ROOT}/PythonAPI/carla/dist/carla-0.9.15-py3.10-linux-x86_64.egg
 ```
 
-```sh
-cd ~/carlaxautoware/carla-0.9.15/streetdrone-hil/op_scripts
-./run_exploration_mode_ros2.sh
-```
-
-### Broadcasting ROS publishes to LAN (Optional)
+### Broadcasting ROS publishes to LAN
 Do this before running `/run_exploration_mode_ros2.sh`:
 
 ```sh
 export ROS_LOCALHOST_ONLY=2
 export ROS_DOMAIN_ID=2
+```
+
+```sh
+cd ~/carlaxautoware/carla-0.9.15/streetdrone-hil/op_scripts
+./run_exploration_mode_ros2.sh
 ```
 
 ### Common Bugs
