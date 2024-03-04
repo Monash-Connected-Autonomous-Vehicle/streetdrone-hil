@@ -1,4 +1,6 @@
 from setuptools import setup
+import os
+from glob import glob
 
 package_name = 'demo'
 
@@ -10,13 +12,16 @@ setup(
         ('share/ament_index/resource_index/packages',
             ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
+        (os.path.join('share', package_name, 'launch'), glob(os.path.join('launch', '*launch.[pxy][yma]*'))),
+				(os.path.join('share', package_name, 'config'), glob(os.path.join('config', '*.json')))
+
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    author='Mikael Arguedas',
-    author_email='mikael@osrfoundation.org',
-    maintainer='Mikael Arguedas',
-    maintainer_email='mikael@osrfoundation.org',
+    author='Dylan Gonzalez',
+    author_email='dylcg10@gmail.com',
+    maintainer='Thai Nguyen',
+    maintainer_email='minh.nguyen6@monash.edu',
     keywords=['ROS'],
     classifiers=[
         'Intended Audience :: Developers',
@@ -24,7 +29,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Software Development',
     ],
-    description='Examples of minimal publishers using rclpy.',
+    description='CARLA HIL Demo package for the Monash CIV4100 unit',
     license='Apache License, Version 2.0',
     tests_require=['pytest'],
     entry_points={
