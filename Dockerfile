@@ -12,7 +12,7 @@ RUN apt-get update && apt-get install -y \
   tmux \
 	wget \
 	kmod \
-  iproute 2 \
+  iproute2 \
 	&& wget https://bootstrap.pypa.io/get-pip.py \
 	&& python3 get-pip.py \
 	&& rm get-pip.py \
